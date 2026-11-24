@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/matildasmets/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/matildasmets/Documents/Projecten/newsfluencer-app/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
