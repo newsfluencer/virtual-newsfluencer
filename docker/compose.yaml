@@ -1,9 +1,36 @@
 # Virtual Newsfluencer - application stack
 # Start:  docker compose up -d
-# Stop:   docker compose down         (data stays in named volumes, AC-03)
+# Stop:   docker compose down
 #
-# Services: frontend (React/TS via nginx) -> backend (PHP) -> database (PostgreSQL)
-#                                                       \-> ollama (local LLM)
-# Only the frontend is published on the host.
-# All settings come from .env (Copy .env.example to .env first.
+name: ${COMPOSE_PROJECT_NAME}
+services:
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "${FRONTEND_PORT}:80"
+    restart: unless-stopped
 
+  backend:
+    image: php:8.4-apache
+    restart: unless-stopped
+
+  llm:
+    image: ollama/ollama
+    restart: unless-stopped
+    volumes:
+      - llm:/root/.ollama
+
+  database:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    volumes:
+      - database:/var/lib/postgresql/data
+
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+
+volumes:
+  llm:
+  database:
