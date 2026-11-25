@@ -1,0 +1,9 @@
+# Virtual Newsfluencer - application stack
+# Start:  docker compose up -d
+# Stop:   docker compose down         (data stays in named volumes, AC-03)
+#
+# Services: frontend (React/TS via nginx) -> backend (PHP) -> database (PostgreSQL)
+#                                                       \-> ollama (local LLM)
+# Only the frontend is published on the host.
+# All settings come from .env (Copy .env.example to .env first.
+
