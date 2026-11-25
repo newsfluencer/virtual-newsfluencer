@@ -1,7 +1,10 @@
 # Virtual Newsfluencer - application stack
-# Start:  docker compose up -d
+# Copy .example.env to .env
+#
+# Start:  docker compose --env-file ../.env up -d
 # Stop:   docker compose down
 #
+# Use docker compose --env-file ../.env config to see which values are used
 name: ${COMPOSE_PROJECT_NAME}
 services:
   frontend:
