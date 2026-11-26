@@ -12,6 +12,7 @@ class News
     {
         return $this->get('/article/getArticles', [
             'lang' => 'nld',
+            'sourceUri' => 'nos.nl',
             'articlesCount' => 10,
         ]);
     }
