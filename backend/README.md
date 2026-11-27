@@ -12,15 +12,28 @@ So `php artisan migrate` becomes `docker compose -f docker-compose.dev.yml exec 
 
 I recommend you install Docker Desktop before continuing these steps.
 
+Use these database values in `.env` (they match `docker-compose.dev.yml`):
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=newsfluencer
+DB_USERNAME=postgres
+DB_PASSWORD=secret
+```
+
 1. Copy `.env.example` to `.env`
 2. Set `API_ACCESS_KEY` (shared secret the frontend must send on every request)
-3. Set `DB_PASSWORD` (Postgres password)
+3. Set the `DB_*` values above
 4. Set `NEWS_API_KEY` for real news articles
 5. Start the stack with `docker compose -f docker-compose.dev.yml up --build`. This builds the image and starts the API and database
 6. Run this command once: `php artisan key:generate` (creates the app encryption key in `.env`)
 7. Run this command once: `php artisan storage:link` (makes uploaded/public files reachable over HTTP)
-8. Set up the database tables (see Database section below).
-9. Stop everything with `docker compose -f docker-compose.dev.yml down`
+8. Run `php artisan config:clear` (reloads `.env` into the app, needed after any `.env` change)
+9. Run `php artisan cache:clear` (clears cached app data)
+10. Set up the database tables (see Database section below)
+11. Stop everything with `docker compose -f docker-compose.dev.yml down`
 
 ### Without Docker
 
@@ -43,6 +56,13 @@ You need PHP 8.3+ (8.5 recommended), Composer, and a local Postgres database ins
 2. `php artisan migrate:fresh` drops all tables and recreates them (wipes data)
 3. `php artisan db:seed` inserts 10 fake articles for local testing
 4. `php artisan migrate:fresh --seed` wipes the database, recreates tables, then seeds fake articles
+
+### Config and cache
+
+After making changes to the `.env` file, run these so the app picks up the new values:
+
+1. `php artisan config:clear` clears cached config (old DB host names live here)
+2. `php artisan cache:clear` clears the application cache
 
 ### Queue and schedule
 
