@@ -11,4 +11,9 @@ class ArticleController extends Controller
     {
         return ArticleResource::collection(Article::all());
     }
+
+    public function show(Article $article)
+    {
+        return new ArticleResource($article);
+    }
 }
